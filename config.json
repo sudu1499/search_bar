@@ -1,5 +1,1 @@
-{
-    "data":".\\data\\data_set.csv",
-    "script":".\\scripts",
-    "total_classes":10002
-}
+{"data": ".\\data\\data_set.csv", "script": ".\\scripts", "total_classes": 100, "max_length": 44}
