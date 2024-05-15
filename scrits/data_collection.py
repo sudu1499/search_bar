@@ -4,6 +4,7 @@ from sklearn.preprocessing import OneHotEncoder
 from keras.preprocessing.text import one_hot
 from keras.utils import pad_sequences
 import numpy as np
+import pickle as pkl
 
 def prepare_data(config):
 
@@ -12,7 +13,7 @@ def prepare_data(config):
     # we want only product name and product url for this case 
 
     x=data['Product Name'].iloc[:config['total_classes']].values
-    y=data['Product Url'].iloc[:config['total_classes']].values
+    y=data['Uniq Id'].iloc[:config['total_classes']].values
 
     y=y.reshape((-1,1))
 
@@ -28,7 +29,26 @@ def prepare_data(config):
     # x=pad_sequences(x,maxlen=73,padding="pre")
     x=pad_sequences(x,maxlen=max_length+1,padding="pre")
     x=np.array(x)
-    ohe=OneHotEncoder()
-    y=ohe.fit_transform(y).toarray()
 
     return x,y,max_length
+
+
+def prepare_data_v2(config):
+
+    x,y,max_length=prepare_data(config)
+    tempx=[]
+    tempy=[]
+    for i in zip(x,y):
+          for j in range(20):
+               tempx.append(i[0])
+               tempy.append(i[1])
+
+    tempx,tempy=np.array(tempx),np.array(tempy)
+    ohe=OneHotEncoder()
+    tempy=ohe.fit_transform(tempy).toarray()
+    pkl.dumps(open("y_OHE.pkl",'wb'))
+    config['OHE']="y_OHE.pkl"
+    json.dump(config,open("config.json","w"))
+    
+    return tempx,tempy,max_length
+
