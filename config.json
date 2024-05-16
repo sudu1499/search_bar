@@ -1,1 +1,1 @@
-{"data": ".\\data\\data_set.csv", "script": ".\\scripts", "total_classes": 1000, "max_length": 44,"OHE":""}
+{"data": ".\\data\\data_set.csv", "script": ".\\scripts", "total_classes": 1000, "max_length": 44, "OHE": "y_OHE.pkl"}
